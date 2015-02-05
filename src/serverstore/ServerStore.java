@@ -14,7 +14,13 @@ import java.net.InetSocketAddress;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author dimbourgiotis
@@ -90,4 +96,30 @@ public class ServerStore {
         return value;
     }
     
+    public void saveInFileWorker(String key, String value ){
+        File yourFile = new File("worker.txt");
+        if(!yourFile.exists()) {
+            try {
+                yourFile.createNewFile();
+            } catch (IOException ex) {
+                Logger.getLogger(ServerStore.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } 
+        try { 
+            FileOutputStream oFile = new FileOutputStream(yourFile, false);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ServerStore.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try
+        {
+            FileWriter fw = new FileWriter("worker.txt",true); //the true will append the new data
+            fw.write(key+"~"+value+"\n");//appends the string to the file
+            fw.close();
+        }
+        catch(IOException ioe)
+        {
+            System.err.println("IOException: " + ioe.getMessage());
+        }
+
+    }    
 }
