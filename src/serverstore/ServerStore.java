@@ -58,9 +58,9 @@ public class ServerStore {
     
     static class GetHandler implements HttpHandler {
         public void handle(HttpExchange t) throws IOException {
-            //edw arxika 8a psaxnei a tou dinei mono key kai 8a emfanizei to value diaforetika 8a to apo8hkeuei se ena apo ta hashmaps
-            String response = "";
+            //edw arxika 8a psaxnei a tou dinei mono key kai 8a emfanizei to value diaforetika 8a to apo8hkeuei se ena apo ta hashmaps            
             String uri = t.getRequestURI().toString();
+            String response = uri;
             String[] parts = uri.split("/");
             if(parts.length>3)
                 response = "Wrong uri please go to /info for more information";
