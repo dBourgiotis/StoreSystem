@@ -87,14 +87,9 @@ public class ServerStore {
                     if(subParts.length!=2)
                         response = "Wrong uri please go to /info for more information";
                     else{
-                        String[] key = subParts[0].split("=");
-                        if( key.length >2 )
-                            response = "Wrong uri please go to /info for more information";
-                        else{
-                            response = "Key = "+key[1] ;
+                        response = "Key = "+subParts[1] ;
                             System.out.println("Get request");
-                            //*************************edw tha ginetai  to load***********************
-                        }
+                            //*************************edw tha ginetai  to load***********************                        
                     }
                 }
                 else{
