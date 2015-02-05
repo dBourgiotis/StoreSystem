@@ -20,6 +20,7 @@ import com.sun.net.httpserver.HttpServer;
  */
 public class ServerStore {
 
+    //TODO hashmaps
     /**
      * @param args the command line arguments
      */
@@ -29,6 +30,8 @@ public class ServerStore {
         server.setExecutor(null); // creates a default executor
         server.start();
     }
+     
+     
 
     static class MyHandler implements HttpHandler {
         public void handle(HttpExchange t) throws IOException {
