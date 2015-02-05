@@ -41,6 +41,7 @@ public class ServerStore {
         server.createContext("/store", new GetHandler());
         server.setExecutor(null); // creates a default executor
         server.start();
+        System.out.println("The server is running");
     }
      
      
