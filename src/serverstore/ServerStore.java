@@ -18,7 +18,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 /**
@@ -27,11 +29,13 @@ import java.util.logging.Logger;
  */
 public class ServerStore {
 
-    private HashMap workerHas = new HashMap();//saves keys and values
-    private HashMap masterHas = new HashMap();//saves keys and keyLocations
+    private static HashMap workerHas = new HashMap();//saves keys and values
+    private static HashMap masterHas = new HashMap();//saves keys and keyLocations
     private static int flag = 1;// for dividing save actions in all the workers
     
      public static void main(String[] args) throws Exception {
+        loadMaster();
+        loadWorker();
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
         server.createContext("/store", new MyHandler());
         server.setExecutor(null); // creates a default executor
@@ -149,4 +153,54 @@ public class ServerStore {
         }
 
     }
+    
+    
+    public static void loadWorker(){
+        File yourFile = new File("worker.txt");
+        ArrayList<String> temp = new ArrayList<String>();
+        if(yourFile.exists()){
+            try {
+                Scanner scan = new Scanner(yourFile);                
+                while (scan.hasNextLine()) {
+                       temp.add(scan.nextLine());
+                }
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(ServerStore.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if(!temp.isEmpty()){
+            for(int i = 0 ; i< temp.size(); i ++){
+                String string = temp.get(i);
+                String[] parts = string.split("~");
+                String key = parts[0];
+                String value = parts[1];
+                workerHas.put(key, value);
+            }
+        }
+    }
+    
+    public static void loadMaster(){
+        File yourFile = new File("master.txt");
+        ArrayList<String> temp = new ArrayList<String>();
+        if(yourFile.exists()){
+            try {
+                Scanner scan = new Scanner(yourFile);                
+                while (scan.hasNextLine()) {
+                       temp.add(scan.nextLine());
+                }
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(ServerStore.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if(!temp.isEmpty()){
+            for(int i = 0 ; i< temp.size(); i ++){
+                String string = temp.get(i);
+                String[] parts = string.split("~");
+                String key = parts[0];
+                String value = parts[1];
+                masterHas.put(key, value);
+            }
+        }
+    }
+    
 }
