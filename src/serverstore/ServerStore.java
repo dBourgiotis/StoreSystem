@@ -51,19 +51,19 @@ public class ServerStore {
             switch(flag){
                 case 1:{
                     workerHas.put(key, value);
-                    masterHas.put(key, flag );// anti gia flag tha bei se string to Url
+                    masterHas.put(key, flag );
                     flag = 2;
                     return true;
                 }
                 case 2:{
                     //connect to socket and send the key value
-                    masterHas.put(key, flag );// anti gia flag tha bei se string to Url
+                    masterHas.put(key, flag );
                     flag = 3;
                     return true;
                 }
                 case 3:{
                     //connect to socket and send the key value
-                    masterHas.put(key, flag );// anti gia flag tha bei se string to Url
+                    masterHas.put(key, flag );
                     flag = 1;
                     return true;
                 }
@@ -72,6 +72,22 @@ public class ServerStore {
                 }                    
             }                        
         } 
+    }
+    
+    public String getValue(String key){
+        //exei ginei elegxos prin thn klhsh gia to an uparxei
+        String value = new String();
+        String node = masterHas.get(key).toString();
+        if (node.equals("1")){
+            value = workerHas.get(key).toString();
+        }else if(node.equals("2")){
+            //connect and get the value from there
+        }else if(node.equals("3")){
+            //connect and get the value from there
+        }else
+            value="false";
+        //
+        return value;
     }
     
 }
