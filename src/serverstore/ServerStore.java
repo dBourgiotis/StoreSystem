@@ -49,6 +49,7 @@ public class ServerStore {
     static class MyHandler implements HttpHandler {
         public void handle(HttpExchange t) throws IOException {
             String response = " Put a key like /store/key=yourKey to get its value or put a key and its value like this /store/key=yourKey&value=yourValue to store it";
+            System.out.println("Info Response");
             t.sendResponseHeaders(200, response.length());
             OutputStream os = t.getResponseBody();
             os.write(response.getBytes());
@@ -62,7 +63,7 @@ public class ServerStore {
             String uri = t.getRequestURI().toString();
             String response = uri;
             String[] parts = uri.split("/");
-            if(parts.length>3)
+            if(parts.length>3 || parts.length<3)
                 response = "Wrong uri please go to /info for more information";
             else{
                 if(parts[2].contains("&")){//if so, it is a put request
@@ -72,17 +73,18 @@ public class ServerStore {
                     else{
                         String[] key = subParts[0].split("=");
                         String[] value = subParts[1].split("=");
-                        if( key.length >2 || value.length > 2)
+                        if( key.length !=2 || value.length != 2)
                             response = "Wrong uri please go to /info for more information";
                         else{
                             response = "Key = "+key[1]+", Value = "+value[1] ;
+                            System.out.println("Put Request");
                             //*************************edw tha ginetai h apo8hkeush***********************
                         }
                     }
                 }
-                else if(parts[2].contains("=")){
+                else if(parts[2].contains("=")){//get request
                     String[] subParts = parts[2].split("=");
-                    if(subParts.length>2)
+                    if(subParts.length!=2)
                         response = "Wrong uri please go to /info for more information";
                     else{
                         String[] key = subParts[0].split("=");
@@ -90,6 +92,7 @@ public class ServerStore {
                             response = "Wrong uri please go to /info for more information";
                         else{
                             response = "Key = "+key[1] ;
+                            System.out.println("Get request");
                             //*************************edw tha ginetai  to load***********************
                         }
                     }
