@@ -121,5 +121,32 @@ public class ServerStore {
             System.err.println("IOException: " + ioe.getMessage());
         }
 
-    }    
+    } 
+    
+    public void saveInFileMaster(String key, String node ){
+        File yourFile = new File("master.txt");
+        if(!yourFile.exists()) {
+            try {
+                yourFile.createNewFile();
+            } catch (IOException ex) {
+                Logger.getLogger(ServerStore.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } 
+        try { 
+            FileOutputStream oFile = new FileOutputStream(yourFile, false);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ServerStore.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try
+        {
+            FileWriter fw = new FileWriter("master.txt",true); //the true will append the new data
+            fw.write(key+"~"+node+"\n");//appends the string to the file
+            fw.close();
+        }
+        catch(IOException ioe)
+        {
+            System.err.println("IOException: " + ioe.getMessage());
+        }
+
+    }
 }
