@@ -35,7 +35,7 @@ public class ServerStore {
             BufferedReader clientInput = new BufferedReader(
                 new InputStreamReader(clientSocket.getInputStream()));
         ) { 
-            clientInput.println("Server: Connection Established! \n");
+            clientOutput.println("Server: Connection Established! \n");
             System.out.println(">> Connection Established! \n");
             //
             //programm logic goes here
