@@ -1,3 +1,15 @@
+/* // Intializations
+// 1) to programma syndeetai me tous workers
+// 2) ftiaxnei thyra gia http requests
+// // Logic (WHILE)
+// 3) Perimenei request key
+// 4) Syllegei plhrofories ap tous workers
+// 5) Epistrefei value
+// // (END_OF_WHILE) Terminate connections
+// 6) Kleinei ta connections twn streams kai twn socket
+// 7) Termatizei
+*/
+
 package serverstore;
 
 import java.io.BufferedReader;
@@ -15,7 +27,7 @@ public class ServerStore {
         final int maxUsers = 2;
 
         try ( 
-            ServerSocket serverSocket = new ServerSocket(portNumber, maxUsers);
+            ServerSocket serverSocket = new ServerSocket( portNumber, maxUsers);
             //printConnectionInfo(portNumber, maxUsers);    
             Socket clientSocket = serverSocket.accept();
                 
