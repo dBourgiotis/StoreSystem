@@ -1,43 +1,48 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package serverstore;
-
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 
-
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-/**
- *
- * @author dimbourgiotis
- */
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+
 public class ServerStore {
 
-    /**
-     * @param args the command line arguments
-     */
-     public static void main(String[] args) throws Exception {
-        HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
-        server.createContext("/store", new MyHandler());
-        server.setExecutor(null); // creates a default executor
-        server.start();
-    }
+    public static void main(String[] args) throws Exception {
+        /* HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
+           server.createContext("/store", new MyHandler());
+           server.setExecutor(null); // creates a default executor
+           server.start(); 
+        */
 
-    static class MyHandler implements HttpHandler {
-        public void handle(HttpExchange t) throws IOException {
-            String response = "Put a key to get its value or put a key and its value to store it";
-            t.sendResponseHeaders(200, response.length());
-            OutputStream os = t.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
+        final int portNumber = 8000;
+        final int maxUsers = 2;
+
+        try ( 
+            ServerSocket serverSocket = new ServerSocket(portNumber, maxUsers);
+            //printConnectionInfo(portNumber, maxUsers);    
+            Socket clientSocket = serverSocket.accept();
+                
+            PrintWriter clientOutput =
+                new PrintWriter(clientSocket.getOutputStream(), true);
+            BufferedReader clientInput = new BufferedReader(
+                new InputStreamReader(clientSocket.getInputStream()));
+        ) { 
+            clientInput.println("Server: Connection Established! \n");
+            System.out.println(">> Connection Established! \n");
+            //
+            //programm logic goes here
+            //
+            serverSocket.close();
         }
-    }
-    
-}
+        
+    } // main
+        
+} // class
