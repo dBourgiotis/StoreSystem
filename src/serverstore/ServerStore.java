@@ -1,27 +1,16 @@
 package serverstore;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.InetSocketAddress;
-
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
-import com.sun.net.httpserver.HttpServer;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class ServerStore {
 
     public static void main(String[] args) throws Exception {
-        /* HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
-           server.createContext("/store", new MyHandler());
-           server.setExecutor(null); // creates a default executor
-           server.start(); 
-        */
-
+        
         final int portNumber = 8000;
         final int maxUsers = 2;
 
