@@ -27,7 +27,7 @@ public  class HandleHelper {
     static HashMap masterHas = new HashMap();//saves keys and keyLocations
     static int flag = 1;// for dividing save actions in all the workers
     
-    public boolean addKeyValue(String key , String value){
+    public static boolean addKeyValue(String key , String value){
         if(masterHas.containsKey(key)){
             return false;//this key is already saved
         }else{
@@ -57,7 +57,7 @@ public  class HandleHelper {
         } 
     }
     
-    public String getValue(String key){
+    public static String getValue(String key){
         //exei ginei elegxos prin thn klhsh gia to an uparxei
         String value = new String();
         String node = masterHas.get(key).toString();
@@ -73,7 +73,7 @@ public  class HandleHelper {
         return value;
     }
     
-    public void saveInFileWorker(String key, String value ){
+    public static void saveInFileWorker(String key, String value ){
         File yourFile = new File("worker.txt");
         if(!yourFile.exists()) {
             try {
@@ -100,7 +100,7 @@ public  class HandleHelper {
 
     } 
     
-    public void saveInFileMaster(String key, String node ){
+    public static void saveInFileMaster(String key, String node ){
         File yourFile = new File("master.txt");
         if(!yourFile.exists()) {
             try {
