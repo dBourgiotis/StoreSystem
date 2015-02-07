@@ -36,7 +36,7 @@ import java.util.logging.Logger;
 public class ServerStore {
     
     
-    final static int portNumber = 8000;
+    final static int portNumber = 8080;
     final static int maxUsers = 2;
 
     
@@ -44,7 +44,7 @@ public class ServerStore {
         HandleHelper myHelper = new HandleHelper();
         myHelper.loadMaster();
         myHelper.loadWorker();
-        HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
+        HttpServer server = HttpServer.create(new InetSocketAddress(portNumber), 0);
         server.createContext("/info", new MyHandler());
         server.createContext("/store", new GetHandler());
         server.setExecutor(null); // creates a default executor
@@ -111,8 +111,8 @@ public class ServerStore {
         }
     } 
     
-    public static boolean  workerConnection() throws IOException{
-        
+    public static String  workerConnection(String action, String key, String value) throws IOException{
+        String response = "error";
         try ( 
             ServerSocket serverSocket = new ServerSocket( portNumber, maxUsers);
             //printConnectionInfo(portNumber, maxUsers);    
@@ -128,9 +128,15 @@ public class ServerStore {
             //
             //programm logic goes here
             //
+            if(action.equals("Get")){
+                
+            }else if(action.equals("Put")){
+                
+            }
+            
             serverSocket.close();
         }
         
-        return true;
+        return response;
     }
 }
