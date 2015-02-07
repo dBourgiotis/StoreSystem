@@ -15,10 +15,15 @@ import java.net.InetSocketAddress;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -29,6 +34,11 @@ import java.util.logging.Logger;
  * @author dimbourgiotis
  */
 public class ServerStore {
+    
+    
+    final static int portNumber = 8000;
+    final static int maxUsers = 2;
+
     
      public static void main(String[] args) throws Exception {
         HandleHelper myHelper = new HandleHelper();
@@ -99,5 +109,28 @@ public class ServerStore {
             os.write(response.getBytes());
             os.close();
         }
-    }    
+    } 
+    
+    public static boolean  workerConnection() throws IOException{
+        
+        try ( 
+            ServerSocket serverSocket = new ServerSocket( portNumber, maxUsers);
+            //printConnectionInfo(portNumber, maxUsers);    
+            Socket clientSocket = serverSocket.accept();
+                
+            PrintWriter clientOutput =
+                new PrintWriter(clientSocket.getOutputStream(), true);
+            BufferedReader clientInput = new BufferedReader(
+                new InputStreamReader(clientSocket.getInputStream()));
+        ) { 
+            clientOutput.println("Server: Connection Established! \n");
+            System.out.println(">> Connection Established! \n");
+            //
+            //programm logic goes here
+            //
+            serverSocket.close();
+        }
+        
+        return true;
+    }
 }
