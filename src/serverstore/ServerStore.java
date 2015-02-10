@@ -96,7 +96,7 @@ public class ServerStore {
                     if(subParts.length!=2)
                         response = "Wrong uri please go to /info for more information";
                     else{
-                        response = "Key = "+subParts[1] ;
+                        response = "Key = "+subParts[1]+"Error" ;
                             System.out.println("Get request");
                             //*************************edw tha ginetai  to load*********************** 
                             HandleHelper myHan = new HandleHelper();
