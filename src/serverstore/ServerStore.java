@@ -25,25 +25,44 @@ public class ServerStore {
         
         final int portNumber = 8000;
         final int maxUsers = 2;
+        ServerSocket serverSocket = null;
+        Socket clientSocket;
 
-        try ( 
-            ServerSocket serverSocket = new ServerSocket( portNumber, maxUsers);
-            //printConnectionInfo(portNumber, maxUsers);    
-            Socket clientSocket = serverSocket.accept();
-                
+        try { 
+            serverSocket = new ServerSocket( portNumber, maxUsers);
+        } catch ( Exception ServerSocket) {
+            System.err.println("Server Socket cannot be created!");
+            System.exit(portNumber);
+        } 
+        
+        try {
+            printServerInfo(portNumber, maxUsers);    
+        } catch(Exception serverInfo) {
+            System.err.println("Server's Info cannot be shown!");
+        }
+        
+        clientSocket = serverSocket.accept();
+               
+        try {
             PrintWriter clientOutput =
                 new PrintWriter(clientSocket.getOutputStream(), true);
             BufferedReader clientInput = new BufferedReader(
                 new InputStreamReader(clientSocket.getInputStream()));
-        ) { 
-            clientOutput.println("Server: Connection Established! \n");
-            System.out.println(">> Connection Established! \n");
+        } catch ( Exception stream) {
+            System.err.println("Client streams cannot be redirected!");
+        } 
+
+        System.out.println(">> Connection Established! \n");
             //
             //programm logic goes here
             //
-            serverSocket.close();
-        }
+        serverSocket.close();
         
     } // main
-        
+    
+    private static void printServerInfo( int portNumber, int maxUsers) {
+        System.out.println("Status Server: Ready!");
+        System.out.println("  IP:"  );
+        System.out.println("Port:"  );
+    }
 } // class
