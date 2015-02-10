@@ -27,6 +27,7 @@ public class ServerStore {
         final int maxUsers = 2;
         ServerSocket serverSocket = null;
         Socket clientSocket;
+        Worker worker;
 
         try { 
             serverSocket = new ServerSocket( portNumber, maxUsers);
@@ -41,21 +42,12 @@ public class ServerStore {
             System.err.println("Server's Info cannot be shown!");
         }
         
-        clientSocket = serverSocket.accept();
-               
-        try {
-            PrintWriter clientOutput =
-                new PrintWriter(clientSocket.getOutputStream(), true);
-            BufferedReader clientInput = new BufferedReader(
-                new InputStreamReader(clientSocket.getInputStream()));
-        } catch ( Exception stream) {
-            System.err.println("Client streams cannot be redirected!");
-        } 
-
-        System.out.println(">> Connection Established! \n");
+        worker = new Worker( serverSocket );
+        
             //
             //programm logic goes here
             //
+        
         serverSocket.close();
         
     } // main
