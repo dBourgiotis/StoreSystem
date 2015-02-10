@@ -84,7 +84,7 @@ public class ServerStore {
                         if( key.length !=2 || value.length != 2)
                             response = "Wrong uri please go to /info for more information";
                         else{
-                            response = "Key = "+key[1]+", Value = "+value[1] ;
+                            response = "You have put "+"Key = "+key[1]+", Value = "+value[1] ;
                             System.out.println("Put Request");
                             //*************************edw tha ginetai h apo8hkeush***********************
                             addKeyValue(key[1],value[1]);
@@ -168,6 +168,8 @@ public class ServerStore {
                 case 1:{
                     myHan.workerHas.put(key, value);
                     myHan.masterHas.put(key, myHan.flag+"" );
+                    myHan.saveInFileMaster(key,myHan.flag+"" );
+                    myHan.saveInFileWorker(key,value);
                     myHan.flag = 2;
                     return true;
                 }
