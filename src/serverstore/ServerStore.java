@@ -87,6 +87,7 @@ public class ServerStore {
                             response = "Key = "+key[1]+", Value = "+value[1] ;
                             System.out.println("Put Request");
                             //*************************edw tha ginetai h apo8hkeush***********************
+                            addKeyValue(key[1],value[1]);
                         }
                     }
                 }
@@ -97,7 +98,24 @@ public class ServerStore {
                     else{
                         response = "Key = "+subParts[1] ;
                             System.out.println("Get request");
-                            //*************************edw tha ginetai  to load***********************                        
+                            //*************************edw tha ginetai  to load*********************** 
+                            HandleHelper myHan = new HandleHelper();
+                            String node=myHan.masterHas.get(subParts[1]).toString();
+                            if(node.equals("1")){
+                                
+                                response = myHan.getValue(subParts[1]);
+                                
+                            }else if(node.equals("2")){
+                                
+                                response = workerConnection("Get",subParts[1],"");
+                                
+                            }else if(node.equals("3")){
+                                
+                                response = workerConnection("Get",subParts[1],"");
+                                
+                            }else{
+                                //error
+                            }
                     }
                 }
                 else{
@@ -139,4 +157,43 @@ public class ServerStore {
         
         return response;
     }
+    
+    public static boolean addKeyValue(String key , String value){
+        HandleHelper myHan = new HandleHelper();
+        String response="";
+        if(myHan.masterHas.containsKey(key)){
+            return false;//this key is already saved
+        }else{
+            switch(myHan.flag){
+                case 1:{
+                    myHan.workerHas.put(key, value);
+                    myHan.masterHas.put(key, myHan.flag+"" );
+                    myHan.flag = 2;
+                    return true;
+                }
+                case 2:{
+                    try {
+                        //connect to socket and send the key value
+                        response = workerConnection("Put",key, value);
+                    } catch (IOException ex) {
+                        Logger.getLogger(ServerStore.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    //TODO Handling response
+                    myHan.masterHas.put(key, myHan.flag+"" );
+                    myHan.flag = 3;
+                    return true;
+                }
+                case 3:{
+                    //connect to socket and send the key value
+                    myHan.masterHas.put(key, myHan.flag+"" );
+                    myHan.flag = 1;
+                    return true;
+                }
+                default:{
+                    return false;
+                }                    
+            }                        
+        } 
+    }
+    
 }

@@ -23,9 +23,9 @@ import serverstore.ServerStore;
  */
 public  class HandleHelper {
     
-    static HashMap workerHas = new HashMap();//saves keys and values
-    static HashMap masterHas = new HashMap();//saves keys and keyLocations
-    static int flag = 1;// for dividing save actions in all the workers
+    public static HashMap workerHas = new HashMap();//saves keys and values
+    public static HashMap masterHas = new HashMap();//saves keys and keyLocations
+    public static int flag = 1;// for dividing save actions in all the workers
     
     public static boolean addKeyValue(String key , String value){
         if(masterHas.containsKey(key)){
