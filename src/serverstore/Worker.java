@@ -9,8 +9,8 @@ import java.net.Socket;
 public class Worker {
 
     private Socket socket = null;
-    private PrintWriter clientOutput = null;
-    private BufferedReader clientInput = null;
+    private BufferedReader in = null;
+    private PrintWriter out = null;
     
     Worker( ServerSocket serverSocket ) {
         
@@ -21,16 +21,19 @@ public class Worker {
             System.err.println("Connection cannot be established!");
             System.exit( serverSocket.getLocalPort() );
         }
+        
         /* Redirect Streams */
         try {
-            clientOutput =
+            out =
                 new PrintWriter(socket.getOutputStream(), true);
-            clientInput = new BufferedReader(
+            in = new BufferedReader(
                 new InputStreamReader(socket.getInputStream()));
         } catch ( Exception stream) {
             System.err.println("Client streams cannot be redirected!");
         } 
+        
         /* Inform for connection status */
         System.out.println(">> Connection Established! \n");
+        out.println("BLAH BLAH BLUH BLEH BLEH");
     }
 }
