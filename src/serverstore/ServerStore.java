@@ -81,8 +81,11 @@ public class ServerStore {
         
         printServerInfo(portNumber, maxUsers, serverSocket);    
         
-        worker = new Worker( serverSocket );
+      //  Thread t = new Thread((Runnable) new Worker( serverSocket ));
+      //  t.start();
         
+        worker = new Worker( serverSocket );
+
         /**/
         /**///programm logic goes here
         /**/
@@ -91,6 +94,9 @@ public class ServerStore {
         
     } // main
 
+    
+    
+    
     static class MyHandler implements HttpHandler {
         public void handle(HttpExchange t) throws IOException {
             String response = " Put a key like /store/key=yourKey to get its value or put a key and its value like this /store/key=yourKey&value=yourValue to store it";
