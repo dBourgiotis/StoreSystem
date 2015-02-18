@@ -33,7 +33,12 @@ public class Worker {
         } 
         
         /* Inform for connection status */
-        System.out.println(">> Connection Established! \n");
-        out.println("BLAH BLAH BLUH BLEH BLEH");
+        sendMessage ( "Connection Established!" );
     }
+    
+    public void sendMessage ( String message ) { 
+        System.out.println(">>" + message );
+        out.println( message );
+    }
+    
 }
