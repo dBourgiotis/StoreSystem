@@ -12,10 +12,6 @@
 
 package serverstore;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -36,25 +32,20 @@ public class ServerStore {
             System.exit(portNumber);
         } 
         
-        try {
-            printServerInfo(portNumber, maxUsers);    
-        } catch(Exception serverInfo) {
-            System.err.println("Server's Info cannot be shown!");
-        }
+        printServerInfo(portNumber, maxUsers, serverSocket);    
         
         worker = new Worker( serverSocket );
         
-            //
-            //programm logic goes here
-            //
+        /**/
+        /**///programm logic goes here
+        /**/
         
         serverSocket.close();
         
     } // main
     
-    private static void printServerInfo( int portNumber, int maxUsers) {
-        System.out.println("Status Server: Ready!");
-        System.out.println("  IP:"  );
-        System.out.println("Port:"  );
+    private static void printServerInfo( int portNumber, int maxUsers, ServerSocket serverSocket) {
+        System.out.println("Server Status: Ready!");
+        System.out.println("Port:" + serverSocket.getLocalPort());
     }
 } // class
