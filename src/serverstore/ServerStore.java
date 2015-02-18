@@ -49,15 +49,13 @@ public class ServerStore {
     
     final static int portNumber = 8080;
     final static int maxUsers = 2;
-
+    
 
     public static void main(String[] args) throws Exception {
         
-        final int portNumber = 8000;
-        final int maxUsers = 2;
         ServerSocket serverSocket = null;
         Socket clientSocket;
-        Worker worker;
+        Worker worker = null;
 
     
      
